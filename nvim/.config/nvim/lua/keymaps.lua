@@ -29,3 +29,13 @@ map('n', '<C-space>', ' ?', { desc = 'ctrl + <space> to ? (backwards search)', r
 
 -- Disable highligth when <leader><cr> pressed
 map('n', '<leader><CR>', vim.cmd.noh)
+
+-- Diagnostics and lsp
+
+map('n', '<leader>gl', vim.diagnostic.open_float, { desc = 'Show Diagnostics' })
+map('n', '<leader>[d', vim.diagnostic.goto_next, { desc = 'Go to Next' })
+map('n', '<leader>]d', vim.diagnostic.goto_prev, { desc = 'Go to Prev' })
+map('n', '<leader>K', vim.lsp.buf.hover, { desc = 'Show Documentation' })
+map('n', '<leader>gd', vim.lsp.buf.definition, { desc = 'Go to Definition' })
+map('n', '<leader>gD', vim.lsp.buf.declaration, { desc = 'Go to Declaration' })
+map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'See available code actions' })

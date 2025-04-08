@@ -22,6 +22,7 @@ local plugins = 'plugins'
 -- General
 require 'settings'
 require 'keymaps'
+require 'lsp'
 
 -- Setup lazy.nvim
 require('lazy').setup(plugins, {
