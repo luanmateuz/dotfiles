@@ -1,3 +1,17 @@
+vim.lsp.config['basedpyright'] = {
+    cmd = { 'basedpyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json' },
+    single_file_support = true,
+    settings = {
+        analysis = {
+            autoSearchPaths = true,
+            diagnosticMode = 'openFilesOnly',
+            useLibraryCodeForTypes = true,
+        },
+    },
+}
+
 vim.lsp.config['clangd'] = {
     cmd = { 'clangd' },
     root_markers = { '.clangd', '.clang-format' },
@@ -29,4 +43,4 @@ vim.diagnostic.config {
     },
 }
 
-vim.lsp.enable { 'clangd', 'gopls', 'lua_ls' }
+vim.lsp.enable { 'basedpyright', 'clangd', 'gopls', 'lua_ls' }
