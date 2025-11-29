@@ -1,6 +1,6 @@
 return {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
+    tag = 'v0.1.9',
     dependencies = {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
@@ -20,6 +20,10 @@ return {
                         '--hidden',
                         '--follow',
                         '--no-ignore-vcs',
+                        '--exclude=.DS_Store',
+                        '--exclude=.git',
+                        '--exclude=node_modules',
+                        '--exclude=.next',
                     },
                 },
             },
