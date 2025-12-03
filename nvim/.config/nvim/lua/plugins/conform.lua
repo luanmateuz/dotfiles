@@ -20,6 +20,7 @@ return {
             c = { 'clang-format' },
             go = { 'gofmt', 'goimports' },
             lua = { 'stylua' },
+            python = { 'ruff_format' },
         },
         format_on_save = {
             async = false,
