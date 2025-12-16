@@ -18,20 +18,23 @@ return {
     {
         'mfussenegger/nvim-dap',
         dependencies = {
+            'mfussenegger/nvim-dap-python',
             {
                 'igorlfs/nvim-dap-view',
                 opts = {
                     winbar = {
+                        show = true,
                         sections = { 'scopes', 'breakpoints', 'threads', 'exceptions', 'repl', 'console' },
                         default_section = 'scopes',
                     },
-                    windows = { height = 14 },
+                    windows = {
+                        height = 0.35,
+                    },
                     -- When jumping through the call stack, try to switch to the buffer if already open in
                     -- a window, else use the last window to open the buffer.
                     switchbuf = 'usetab,uselast',
                 },
             },
-            'mfussenegger/nvim-dap-python',
             {
                 'theHamsta/nvim-dap-virtual-text',
                 opts = { virt_text_pos = 'eol' },
@@ -43,28 +46,56 @@ return {
                 function()
                     require('dap').toggle_breakpoint()
                 end,
-                desc = 'Toggle breakpoint',
+                desc = 'Toggle Breakpoint',
+            },
+            {
+                '<leader>dB',
+                function()
+                    require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+                end,
+                desc = 'Breakpoint Condition',
             },
             {
                 '<leader>dc',
                 function()
-                    require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition:')
-                end,
-                desc = 'Breakpoint condition',
-            },
-            {
-                '<leader>ds',
-                function()
                     require('dap').continue()
                 end,
-                desc = 'Start / Continue',
+                desc = 'Run/Continue',
             },
             {
-                '<leader>do',
+                '<leader>dC',
                 function()
-                    require('dap').step_over()
+                    require('dap').run_to_cursor()
                 end,
-                desc = 'Step Over',
+                desc = 'Run to Cursor',
+            },
+            {
+                '<leader>dg',
+                function()
+                    require('dap').goto_()
+                end,
+                desc = 'Go to Line (No Execute)',
+            },
+            {
+                '<leader>dj',
+                function()
+                    require('dap').down()
+                end,
+                desc = 'Down',
+            },
+            {
+                '<leader>dk',
+                function()
+                    require('dap').up()
+                end,
+                desc = 'Up',
+            },
+            {
+                '<leader>dl',
+                function()
+                    require('dap').run_last()
+                end,
+                desc = 'Run Last',
             },
             {
                 '<leader>di',
@@ -74,18 +105,67 @@ return {
                 desc = 'Step Into',
             },
             {
-                '<leader>dO',
+                '<leader>dn',
+                function()
+                    require('dap').step_over()
+                end,
+                desc = 'Step Over',
+            },
+            {
+                '<leader>do',
                 function()
                     require('dap').step_out()
                 end,
                 desc = 'Step Out',
             },
             {
+                '<leader>dP',
+                function()
+                    require('dap').pause()
+                end,
+                desc = 'Pause',
+            },
+            {
+                '<leader>ds',
+                function()
+                    require('dap').session()
+                end,
+                desc = 'Session',
+            },
+            {
+                '<leader>dt',
+                function()
+                    require('dap-view').toggle()
+                end,
+                desc = 'Toggle DAP UI',
+            },
+            {
                 '<leader>dq',
                 function()
                     require('dap').terminate()
+                    require('dap-view').close()
+                    require('nvim-dap-virtual-text').toggle()
                 end,
-                desc = 'Keymap to terminate debugging',
+                desc = 'Quit',
+                nowait = true,
+                remap = true,
+            },
+            -- python
+            {
+                '<leader>ptm',
+                function()
+                    require('dap-python').test_method()
+                end,
+                desc = '[Python] Test Method',
+                silent = true,
+            },
+            {
+                '<leader>ptc',
+                function()
+                    require('dap-python').test_class()
+                end,
+                desc = '[Python] Test Class',
+                silent = true,
             },
         },
         config = function()
@@ -106,10 +186,16 @@ return {
             dap.listeners.before.launch['dap-view-config'] = function()
                 dv.open()
             end
-            dap.listeners.before.event_terminated['dap-view-config'] = function()
+            dap.listeners.before.event_terminated['dap-view-config'] = function(session)
+                if session.config.type == 'python' then
+                    return
+                end
                 dv.close()
             end
-            dap.listeners.before.event_exited['dap-view-config'] = function()
+            dap.listeners.before.event_exited['dap-view-config'] = function(session)
+                if session.config.type == 'python' then
+                    return
+                end
                 dv.close()
             end
         end,
