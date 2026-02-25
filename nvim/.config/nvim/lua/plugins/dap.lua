@@ -28,7 +28,7 @@ return {
                         default_section = 'scopes',
                     },
                     windows = {
-                        height = 0.35,
+                        size = 0.35,
                     },
                     -- When jumping through the call stack, try to switch to the buffer if already open in
                     -- a window, else use the last window to open the buffer.
@@ -175,7 +175,10 @@ return {
             local dap_py = require 'dap-python'
             local dap_vt = require 'nvim-dap-virtual-text'
 
-            dap_py.setup 'uv'
+            -- dap_py.setup 'uv'
+            local debugpy_path = vim.fn.stdpath 'data' .. '/debugpy/bin/python'
+            dap_py.setup(debugpy_path)
+
             dap_vt.setup {
                 commented = true, -- Show virtual text alongside comment
             }

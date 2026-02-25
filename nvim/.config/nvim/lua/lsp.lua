@@ -1,13 +1,16 @@
 vim.lsp.config['basedpyright'] = {
+    -- uv tool install basedpyright
     cmd = { 'basedpyright-langserver', '--stdio' },
     filetypes = { 'python' },
-    root_markers = { 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json' },
+    root_markers = { 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json', '.venv' },
     single_file_support = true,
     settings = {
-        analysis = {
-            autoSearchPaths = true,
-            diagnosticMode = 'openFilesOnly',
-            useLibraryCodeForTypes = true,
+        basedpyright = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+            },
         },
     },
 }
