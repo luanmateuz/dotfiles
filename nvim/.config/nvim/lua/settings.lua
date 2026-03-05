@@ -1,6 +1,7 @@
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
+vim.opt.cursorline = true
 vim.opt.guicursor = ''
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -11,6 +12,9 @@ vim.opt.expandtab = true
 
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
+
+-- use single border for floating windows
+vim.opt.winborder = 'single'
 
 -- sync clipboard between the OS and Neovim
 vim.opt.clipboard = 'unnamedplus'
@@ -25,7 +29,7 @@ vim.opt.updatetime = 50
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', space = '·' }
 
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.cmdheight = 1
 
 -- Disable health checks for these providers
