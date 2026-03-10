@@ -1,9 +1,13 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    version = false,
     build = ':TSUpdate',
-    opts = {
-        ensure_installed = {
+    branch = 'main',
+    lazy = false,
+
+    config = function()
+        local treesitter = require 'nvim-treesitter'
+
+        treesitter.install {
             'bash',
             'c',
             'cpp',
@@ -24,13 +28,12 @@ return {
             'vim',
             'vimdoc',
             'yaml',
-        },
-        sync_install = false,
-        highlight = { enable = true },
-        indent = {
-            enable = true,
-            -- treesitter unindents yaml lists for some reason.
-            disable = { 'yaml' },
-        },
-    },
+        }
+
+        vim.api.nvim_create_autocmd('FileType', {
+            callback = function()
+                pcall(vim.treesitter.start)
+            end,
+        })
+    end,
 }
