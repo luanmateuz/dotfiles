@@ -6,9 +6,9 @@ return {
         'antoinemadec/FixCursorHold.nvim',
         'nvim-treesitter/nvim-treesitter',
         'nvim-neotest/neotest-python',
+        'fredrikaverpil/neotest-golang',
     },
     keys = {
-        { '<leader>T', '', desc = '+test' },
         {
             '<leader>Tt',
             function()
@@ -139,6 +139,7 @@ return {
                     dap = { justMyCode = false, console = 'integratedTerminal', subProcess = false },
                     args = { '-vv' },
                 },
+                require 'neotest-golang' {},
             },
         }
     end,

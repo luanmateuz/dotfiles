@@ -18,17 +18,49 @@ return {
     {
         'mfussenegger/nvim-dap',
         dependencies = {
+            'leoluz/nvim-dap-go',
             'mfussenegger/nvim-dap-python',
             {
                 'igorlfs/nvim-dap-view',
                 opts = {
                     winbar = {
                         show = true,
-                        sections = { 'scopes', 'breakpoints', 'threads', 'exceptions', 'repl', 'console' },
+                        sections = { 'watches', 'scopes', 'breakpoints', 'threads', 'exceptions', 'repl', 'console' },
                         default_section = 'scopes',
+                        controls = {
+                            enabled = true,
+                            position = 'right',
+                            buttons = {
+                                'play',
+                                'step_into',
+                                'step_over',
+                                'step_out',
+                                'step_back',
+                                'run_last',
+                                'terminate',
+                                'disconnect',
+                            },
+                        },
                     },
                     windows = {
-                        size = 0.35,
+                        size = 0.30,
+                    },
+                    icons = {
+                        collapsed = '󰅂 ',
+                        disabled = '',
+                        disconnect = '',
+                        enabled = '',
+                        expanded = '󰅀 ',
+                        filter = '󰈲',
+                        negate = ' ',
+                        pause = '',
+                        play = '',
+                        run_last = '',
+                        step_back = '',
+                        step_into = '',
+                        step_out = '',
+                        step_over = '',
+                        terminate = '',
                     },
                     -- When jumping through the call stack, try to switch to the buffer if already open in
                     -- a window, else use the last window to open the buffer.
@@ -37,7 +69,10 @@ return {
             },
             {
                 'theHamsta/nvim-dap-virtual-text',
-                opts = { virt_text_pos = 'eol' },
+                opts = {
+                    commented = true, -- Show virtual text alongside comment
+                    virt_text_pos = 'eol',
+                },
             },
         },
         keys = {
@@ -150,6 +185,15 @@ return {
                 nowait = true,
                 remap = true,
             },
+            -- golang
+            {
+                '<leader>gdt',
+                function()
+                    require('dap-go').debug_test()
+                end,
+                desc = '[Go] Debug Test',
+                silent = true,
+            },
             -- python
             {
                 '<leader>ptm',
@@ -172,16 +216,18 @@ return {
             local dap = require 'dap'
             local dv = require 'dap-view'
 
+            local dap_go = require 'dap-go'
             local dap_py = require 'dap-python'
-            local dap_vt = require 'nvim-dap-virtual-text'
+
+            dap_go.setup {
+                delve = {
+                    detached = vim.fn.has 'win32' == 0,
+                },
+            }
 
             -- dap_py.setup 'uv'
             local debugpy_path = vim.fn.stdpath 'data' .. '/debugpy/bin/python'
             dap_py.setup(debugpy_path)
-
-            dap_vt.setup {
-                commented = true, -- Show virtual text alongside comment
-            }
 
             dap.listeners.before.attach['dap-view-config'] = function()
                 dv.open()
