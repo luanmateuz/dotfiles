@@ -10,84 +10,84 @@ return {
     },
     keys = {
         {
-            '<leader>Tt',
+            '<leader>tt',
             function()
                 require('neotest').run.run(vim.fn.expand '%')
             end,
             desc = 'Run File',
         },
         {
-            '<leader>TT',
+            '<leader>tT',
             function()
                 require('neotest').run.run(vim.uv.cwd())
             end,
             desc = 'Run All Test Files',
         },
         {
-            '<leader>Tr',
+            '<leader>tr',
             function()
                 require('neotest').run.run()
             end,
             desc = 'Run Nearest',
         },
         {
-            '<leader>Tl',
+            '<leader>tl',
             function()
                 require('neotest').run.run_last()
             end,
             desc = 'Run Last',
         },
         {
-            '<leader>Td',
+            '<leader>td',
             function()
                 require('neotest').run.run { strategy = 'dap' }
             end,
             desc = 'Debug Nearest',
         },
         {
-            '<leader>Tw',
+            '<leader>tw',
             function()
                 require('neotest').watch.toggle()
             end,
             desc = 'Toggle Watch',
         },
         {
-            '<leader>Ts',
+            '<leader>ts',
             function()
                 require('neotest').summary.toggle()
             end,
             desc = 'Toggle Summary',
         },
         {
-            '<leader>TO',
+            '<leader>to',
             function()
                 require('neotest').output.open { enter = true, auto_close = true }
             end,
             desc = 'Show Output',
         },
         {
-            '<leader>To',
+            '<leader>tO',
             function()
                 require('neotest').output_panel.toggle()
             end,
             desc = 'Toggle Output Panel',
         },
         {
-            '<leader>TS',
+            '<leader>tS',
             function()
                 require('neotest').run.stop()
             end,
             desc = 'Stop',
         },
         {
-            '<leader>T]',
+            '<leader>t]',
             function()
                 require('neotest').jump.next { status = 'failed' }
             end,
             desc = 'Next Failed Test',
         },
         {
-            '<leader>T[',
+            '<leader>t[',
             function()
                 require('neotest').jump.prev { status = 'failed' }
             end,
