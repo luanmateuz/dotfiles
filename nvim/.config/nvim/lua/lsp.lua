@@ -4,7 +4,7 @@ vim.g.inlay_hints = false
 
 -- Diagnostic configuration
 vim.diagnostic.config {
-    virtual_text = { prefix = '::: ', spacing = 2 },
+    virtual_text = { spacing = 2 },
     float = { border = 'single', source = 'if_many' },
     signs = false,
     severity_sort = true,
@@ -105,11 +105,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- Init LSP
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
+vim.api.nvim_create_autocmd({ 'VimEnter' }, {
     once = true,
     callback = function()
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        local ok, blink = pcall(require, 'blink.cmp')
+        if ok then
+            capabilities = blink.get_lsp_capabilities(capabilities, true)
+        end
         vim.lsp.config('*', {
-            capabilities = require('blink.cmp').get_lsp_capabilities(nil, true),
+            capabilities,
         })
 
         local servers = vim.iter(vim.api.nvim_get_runtime_file('lsp/*.lua', true))
@@ -118,7 +123,9 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
             end)
             :totable()
 
-        vim.lsp.enable(servers)
+        if #servers > 0 then
+            vim.lsp.enable(servers)
+        end
     end,
 })
 
