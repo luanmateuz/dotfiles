@@ -1,18 +1,12 @@
-return {
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    event = 'VeryLazy',
-    -- For setting shiftwidth and tabstop automatically
-    dependencies = 'tpope/vim-sleuth',
+local ibl = require 'ibl'
 
-    opts = {
-        indent = {
-            char = '┊',
-        },
-        scope = {
-            enabled = true,
-            show_start = false,
-            show_end = false,
-        },
+ibl.setup {
+    indent = {
+        char = '┊',
+    },
+    scope = {
+        enabled = true,
+        show_start = false,
+        show_end = false,
     },
 }

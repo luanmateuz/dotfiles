@@ -1,9 +1,8 @@
-return {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = function()
-        local npairs = require 'nvim-autopairs'
+local autopairs = require 'nvim-autopairs'
 
-        npairs.setup()
-    end,
+autopairs.setup {
+    check_ts = true, -- treesitter enabled
+    ts_config = {
+        lua = { 'string' }, -- dont add pairs in lua string treesitter nodes
+    },
 }

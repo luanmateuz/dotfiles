@@ -1,15 +1,12 @@
-return {
-    'lewis6991/gitsigns.nvim',
+local gitsigns = require 'gitsigns'
 
-    config = true,
-    opts = {
-        current_line_blame = true,
-        signs = {
-            add = { text = '+' },
-            change = { text = '~' },
-            delete = { text = '_' },
-            topdelete = { text = '‾' },
-            changedelete = { text = '~' },
-        },
+gitsigns.setup {
+    current_line_blame = true,
+    signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
     },
 }
